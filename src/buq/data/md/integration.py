@@ -160,6 +160,7 @@ def optimize(val_grid, dval_grid, dx, dy, npts, max_iter=100, verbose=False):
             "maxiter": max_iter,
             "maxls": 50,
             "iprint": 10,
+            "disp": False
         },
         callback=callback_func,
     )

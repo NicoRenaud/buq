@@ -1,0 +1,10 @@
+target,lengthscale,acq_function,kernel_type,num_stats, num_init_samples
+alanine,0.75,IVR,Matern52,100,11
+alanine,0.75,US,Matern52,100,11
+alanine,0.5,IVR,Matern52,100,11
+alanine,0.5,US,Matern52,100,11
+alanine,0.75,IVR,RBF,100,11
+alanine,0.75,US,RBF,100,11
+alanine,0.5,IVR,RBF,100,11
+alanine,0.5,US,RBF,100,11
+

@@ -157,7 +157,7 @@ class ClassicalBayesianQuadratureMD:
             )
 
     def evaluate_free_energy(
-        self, minimization: bool = True, max_iter: int = 100
+        self, minimization: bool = False, max_iter: int = 100
     ):
         """
         Compute the free energy surface using the surrogate model by integrating the value
@@ -171,7 +171,7 @@ class ClassicalBayesianQuadratureMD:
         if self.x_plot is None:
             raise ValueError("x_plot is None. Free energy cannot be computed.")
         forces, _ = self.surrogate_model.predict(self.x_plot)
-        print(forces)
+
         forces = forces.reshape(
             self.npts_plot, self.npts_plot, 2
         )
