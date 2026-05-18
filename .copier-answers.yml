@@ -1,0 +1,13 @@
+# Changes here will be overwritten by Copier
+_commit: 0.6.1
+_src_path: https://github.com/nlesc/python-template.git
+copyright_holder: Nicolas Renaud
+email: nicolas.renaud@surf.nl
+full_name: Nicolas Renaud
+github_organization: surfquantum
+keywords: bayesisan quadrature MD
+license: Apachev2
+package_name: buq
+package_short_description: Bayesian Uncertainty Quadrature
+template_profile: minimum
+version: 0.1.0
