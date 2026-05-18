@@ -67,6 +67,6 @@ if __name__ == "__main__":
         results.append(res)
 
     
-    name = f"{target}_{kernel_type}_{lengthscale}_{num_init}_{num_stats}.pkl"
+    name = f"{target}_{kernel_type}_{lengthscale}_{acq_function}.pkl"
     with open(name,'wb') as f:
         pickle.dump(results, f)
