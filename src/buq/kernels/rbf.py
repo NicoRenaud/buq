@@ -4,6 +4,7 @@ import GPy
 # )
 from emukit.quadrature.measures import LebesgueMeasure
 from emukit.quadrature.kernels import QuadratureRBFLebesgueMeasure
+from emukit.model_wrappers.gpy_quadrature_wrappers import  BaseGaussianProcessGPy
 
 from .sum import SumRBFWhiteGPy
 from .base_kernel import BaseKernel
@@ -60,4 +61,4 @@ class RBFKernel(BaseKernel):
         emukit_kernel = SumRBFWhiteGPy(gpy_model.kern)
         emukit_measure = LebesgueMeasure.from_bounds(bounds=bounds)
         emukit_qrbf = QuadratureRBFLebesgueMeasure(emukit_kernel, emukit_measure)
-        return emukit_qrbf
+        return BaseGaussianProcessGPy(kern=emukit_qrbf, gpy_model=gpy_model)

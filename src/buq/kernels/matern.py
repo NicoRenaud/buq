@@ -4,6 +4,7 @@ import GPy
 #     QuadratureProductMatern52LebesgueMeasure,
 # )
 from emukit.quadrature.measures import LebesgueMeasure
+from emukit.model_wrappers.gpy_quadrature_wrappers import  BaseGaussianProcessGPy
 from .sum import SumMatern52WhiteGPy
 from .quadprod import QuadratureProductMatern52LebesgueMeasure
 from .base_kernel import BaseKernel
@@ -59,4 +60,4 @@ class MaternKernel(BaseKernel):
         emukit_kernel = SumMatern52WhiteGPy(gpy_model.kern)
         emukit_measure = LebesgueMeasure.from_bounds(bounds=bounds)
         emukit_qrbf = QuadratureProductMatern52LebesgueMeasure(emukit_kernel, emukit_measure)
-        return emukit_qrbf
+        return BaseGaussianProcessGPy(kern=emukit_qrbf, gpy_model=gpy_model)

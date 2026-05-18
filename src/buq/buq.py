@@ -146,10 +146,10 @@ class ClassicalBayesianQuadratureMD:
                 "IVR": emu_acqui.IntegralVarianceReduction,
                 "US": emu_acqui.UncertaintySampling,
                 # "V3": emu_acqui.VoronoiVerticesVariance,
-            }[self.acquisition.upper()](self.surrogate_model, **kwargs)
+            }[self.acquisition.upper()](self.emukit_method, **kwargs)
 
         elif issubclass(self.acquisition, BaseAcquisition):
-            self.acq_func = self.acquisition(self.surrogate_model, **kwargs)
+            self.acq_func = self.acquisition(self.emukit_method, **kwargs)
 
         else:
             raise ValueError(
@@ -158,7 +158,7 @@ class ClassicalBayesianQuadratureMD:
 
     def evaluate_free_energy(
         self, minimization: bool = True, max_iter: int = 100
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    ):
         """
         Compute the free energy surface using the surrogate model by integrating the value
         of the forces predicted by the surrogate model.
@@ -170,7 +170,9 @@ class ClassicalBayesianQuadratureMD:
         """
         if self.x_plot is None:
             raise ValueError("x_plot is None. Free energy cannot be computed.")
-        forces = self.surrogate_model.predict(self.x_plot).reshape(
+        forces, _ = self.surrogate_model.predict(self.x_plot)
+        print(forces)
+        forces = forces.reshape(
             self.npts_plot, self.npts_plot, 2
         )
         dx = self.x_plot[1, 0] - self.x_plot[0, 0]
@@ -187,7 +189,7 @@ class ClassicalBayesianQuadratureMD:
 
     def find_optimal_location(
         self, acquisition: Callable, x_sample: np.ndarray
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    ):
         """
         Find the optimal location to evaluate the acquisition function.
 
@@ -214,8 +216,8 @@ class ClassicalBayesianQuadratureMD:
         max_index = np.unravel_index(
             np.argmax(acq_vals), acq_vals.shape
         )
-        new_x_ivr = self.x_plot[max_index, 0]
-        new_y_ivr = self.x_plot[max_index, 1]
+        new_x_ivr = self.x_plot[max_index, 0][0]
+        new_y_ivr = self.x_plot[max_index, 1][0]
 
         xy_new = np.array([[new_x_ivr, new_y_ivr]])
 
@@ -254,6 +256,7 @@ class ClassicalBayesianQuadratureMD:
             y_next = self.target_function(x_next)
 
             # Update dataset
+            print(self.x_data, x_next)
             self.x_data = np.vstack((self.x_data, x_next))
             self.y_data = np.vstack((self.y_data, y_next))
 
