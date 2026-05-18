@@ -1,15 +1,15 @@
 import GPy
-from emukit.model_wrappers.gpy_quadrature_wrappers import (
-    QuadratureRBFLebesgueMeasure,
-    QuadratureProductMatern52LebesgueMeasure,
-)
-from emukit.quadrature.kernels import LebesgueMeasure
-
+# from emukit.model_wrappers.gpy_quadrature_wrappers import (
+#     QuadratureRBFLebesgueMeasure,
+#     QuadratureProductMatern52LebesgueMeasure,
+# )
+from emukit.quadrature.measures import LebesgueMeasure
 from .sum import SumMatern52WhiteGPy
 from .quadprod import QuadratureProductMatern52LebesgueMeasure
+from .base_kernel import BaseKernel
 
 
-class MaternKernel:
+class MaternKernel(BaseKernel):
     """
     Wrapper for a GPy Matern52 and White kernel to use with EmuKit quadrature.
 

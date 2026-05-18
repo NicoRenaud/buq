@@ -27,6 +27,9 @@ dependencies = [
     "scipy",
     "matplotlib",
     "numpy",
+    "ase",
+    "mace-torch",
+    "plumed",
 ]
 description = "Bayesian Uncertainty Quadrature"
 keywords = ["bayesisan quadrature MD"]

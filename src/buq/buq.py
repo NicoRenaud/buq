@@ -14,6 +14,7 @@ from buq.data.target_function import BaseTargetFunction
 
 import matplotlib.pyplot as plt
 
+from .kernels.base_kernel import BaseKernel
 
 class ClassicalBayesianQuadratureMD:
 
@@ -42,7 +43,7 @@ class ClassicalBayesianQuadratureMD:
 
     def __init__(
         self,
-        surrogate_model: BaseGaussianProcessGPy,
+        kernel: BaseKernel,
         target_function: BaseTargetFunction,
         acquisition_function: str = "IVR",
         acquisition_function_kwargs: dict = {},
@@ -50,7 +51,7 @@ class ClassicalBayesianQuadratureMD:
         npts_plot: int = 10,
     ):
         # Initialize the class
-        self.surrogate_model = surrogate_model
+        self.kernel = kernel
         self.target_function = target_function
         self.acquisition = acquisition_function
         self.acquisition_function_kwargs = acquisition_function_kwargs
@@ -91,6 +92,13 @@ class ClassicalBayesianQuadratureMD:
         # Initialize the surrogate model and acquisition function
         self.x_data = self.target_function.generate_samples(self.num_init_samples)
         self.y_data = self.target_function(self.x_data)
+
+        # initiate the surrogate model
+        self.surrogate_model = self.kernel.get_kernel(
+            self.x_data,
+            self.y_data,
+            bounds=self.target_function.parameter_space.get_bounds(),
+        )
 
         self.emukit_method = VanillaBayesianQuadrature(
             base_gp=self.surrogate_model, X=self.x_data, Y=self.y_data

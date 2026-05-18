@@ -1,14 +1,16 @@
 import GPy
-from emukit.model_wrappers.gpy_quadrature_wrappers import (
-    QuadratureRBFLebesgueMeasure,
-)
-from emukit.quadrature.kernels import LebesgueMeasure
+# from emukit.model_wrappers.gpy_quadrature_wrappers import (
+#     QuadratureRBFLebesgueMeasure,
+# )
+from emukit.quadrature.measures import LebesgueMeasure
+from emukit.quadrature.kernels import QuadratureRBFLebesgueMeasure
 
 from .sum import SumRBFWhiteGPy
+from .base_kernel import BaseKernel
 
 
 
-class RBFKernel:
+class RBFKernel(BaseKernel):
     """
     Wrapper for a GPy RBF and White kernel to use with EmuKit quadrature.
 
@@ -19,7 +21,7 @@ class RBFKernel:
     noise : float
         The variance of the white kernel.
     """
-    def __init__(self, lengthscale, noise):
+    def __init__(self, lengthscale=0.75, noise=0.0):
         """
         Initialize an RBF kernel with the given lengthscale and noise.
 
