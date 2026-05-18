@@ -48,7 +48,7 @@ class ClassicalBayesianQuadratureMD:
         acquisition_function: str = "IVR",
         acquisition_function_kwargs: dict = {},
         num_init_samples: int = 2,
-        npts_plot: int = 10,
+        npts_plot: int = 25,
     ):
         # Initialize the class
         self.kernel = kernel
@@ -256,7 +256,6 @@ class ClassicalBayesianQuadratureMD:
             y_next = self.target_function(x_next)
 
             # Update dataset
-            print(self.x_data, x_next)
             self.x_data = np.vstack((self.x_data, x_next))
             self.y_data = np.vstack((self.y_data, y_next))
 
@@ -380,21 +379,21 @@ class ClassicalBayesianQuadratureMD:
         plt.title("Error", fontsize=10)
         plt.show()
 
-        if self.acq_func.plot_acquisition_map:
+        # if self.acq_func.plot_acquisition_map:
 
-            plt.subplot(121)
-            plt.imshow(
-                (acq_vals[:, :, 0]), cmap="viridis", extent=extent, origin=origin
-            )
-            plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
-            plt.title("Acquisition X", fontsize=10)
+        #     plt.subplot(121)
+        #     plt.imshow(
+        #         (acq_vals[:, :, 0]), cmap="viridis", extent=extent, origin=origin
+        #     )
+        #     plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
+        #     plt.title("Acquisition X", fontsize=10)
 
-            plt.subplot(122)
-            plt.imshow(
-                (acq_vals[:, :, 1]), cmap="viridis", extent=extent, origin=origin
-            )
-            plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
-            plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
-            plt.title("Acquisition Y", fontsize=10)
+        #     plt.subplot(122)
+        #     plt.imshow(
+        #         (acq_vals[:, :, 1]), cmap="viridis", extent=extent, origin=origin
+        #     )
+        #     plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
+        #     plt.scatter(x_sample[-1, 0], x_sample[-1, 1], color="red", marker="x", s=20)
+        #     plt.title("Acquisition Y", fontsize=10)
 
-            plt.show()
+        #     plt.show()
